@@ -1,0 +1,95 @@
+{
+ "task": "eurs",
+ "model": {
+  "encoder": "mobilenetv3_small_075",
+  "pretrained": true,
+  "num_classes": 5,
+  "seg_channels": 96,
+  "restore_channels": 32,
+  "seg_stride4": true,
+  "decoder": "lraspp",
+  "refine_channels": 8,
+  "output_stride": 8,
+  "fine_channels": 0,
+  "flip_tta": false,
+  "internal_scale": 1.0,
+  "coeff_upsample": "bilinear",
+  "global_colour": true
+ },
+ "data": {
+  "size": [
+   768,
+   1024
+  ],
+  "val_fraction": 0,
+  "fold": 0,
+  "val_max_per_scene": 20,
+  "layout": {
+   "degraded_glob": "degraded/**/*.png",
+   "clean_glob": "gt_images/*.png",
+   "mask_glob": "gt_masks/*.png",
+   "scene_regex": "^(?P<scene>[^_.]+)",
+   "mask_palette": null,
+   "degraded_scene": "regex",
+   "clean_regex": null
+  },
+  "external": {
+   "enabled": true,
+   "share": 0.5,
+   "root": "/kaggle/tmp/external_pl",
+   "rsuigm": "/kaggle/tmp/rsuigm_params.npz",
+   "rsuigm_gpu": true,
+   "w_restore": 1.0
+  }
+ },
+ "train": {
+  "epochs": 60,
+  "batch_size": 8,
+  "lr": 0.002,
+  "weight_decay": 0.0001,
+  "w_seg": 1.0,
+  "w_lovasz": 1.0,
+  "w_restore": 1.0,
+  "num_workers": 1,
+  "class_weights": "auto",
+  "class_boost": [
+   1.0,
+   1.0,
+   1.0,
+   3.0,
+   2.0
+  ],
+  "ohem": null,
+  "ema_decay": 0.999,
+  "select_on": "static",
+  "samples_per_epoch": 4000,
+  "seed": 0
+ },
+ "aug": {
+  "scale_range": [
+   0.5,
+   2.0
+  ],
+  "hflip": true,
+  "redegrade_p": 0.3
+ },
+ "distill": {
+  "teacher": "/kaggle/tmp/work/runs/seg/f053_all",
+  "w_kd": 1.0,
+  "temperature": 2.0,
+  "w_cwd": 0.0,
+  "cwd_temperature": 4.0,
+  "teacher_input": "degraded",
+  "cache": false,
+  "w_restore": 0.0
+ },
+ "calibrate": {
+  "enabled": true,
+  "area_floor": 0.5,
+  "max_bias": 3.0,
+  "step": 0.1,
+  "pixel_stride": 4,
+  "max_per_scene": 20,
+  "bias": null
+ }
+}

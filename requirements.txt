@@ -1,0 +1,2 @@
+# Extra pip packages beyond the organizers' base image: none.
+# export_onnx.py needs only torch and onnx, both in the base image.
