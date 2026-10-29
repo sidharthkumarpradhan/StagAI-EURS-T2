@@ -1,5 +1,5 @@
 team: StagAI
 track: eurs-t2
 submission_id: 19409            # model name d9cc10e43ef5, testing phase, composite 0.419
-contact: sidharthp@assignall.ai
+contact: spradhan@student.fairfield.edu
 hardware: NVIDIA V100 16 GB (export runs on CPU)
