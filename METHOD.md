@@ -46,7 +46,12 @@ loss log10(MSE) + 2 (1 - SSIM), all 20 train scenes plus 8 crops per step re-deg
 ## Training data
 
 The 20 scenes of `eurs_train.zip` only (4,000 degraded renderings with clean image and mask). No development or
-testing-phase image was used for training, fine-tuning, pseudo-labelling, model selection or calibration.
+testing-phase image was used for training, fine-tuning, pseudo-labelling or calibration; no weights were changed using
+them. Disclosure on selection: (a) development-phase leaderboard scores guided which recipes we kept; (b) before
+uploading 19409 we compared five candidate Track 2 graphs (all already trained) by their segmentation agreement with our
+own Track 1 predicted masks on 80 Track 1 testing-phase images (no ground truth; nothing was trained or tuned on them,
+and each output still depends only on its own input). The reported submission was then chosen by its testing-phase
+leaderboard score (0.419, best of our five Track 2 testing-phase submissions).
 
 **External data and pretrained models.**
 - Segmentation masks (mapped to the five EURS classes, re-degraded synthetically with an image-formation model fitted on
@@ -67,4 +72,4 @@ The adaptive sharpening is part of the graph.
 `python repro_check.py . --export-onnx` regenerates the ONNX in a few seconds on CPU. Checked 29 Oct 2026 with
 torch 2.5.1 / onnx 1.23.1 (the versions that produced the upload) and a newer torch: byte-identical to
 `onnx/submitted_model.onnx`. Choice made from testing-phase leaderboard scores: we report 19409 (`d9cc10e43ef5`,
-0.419) as our best of five testing-phase Track 2 submissions.
+0.419) as our best of five testing-phase Track 2 submissions (see "Training data" for the selection disclosure).
